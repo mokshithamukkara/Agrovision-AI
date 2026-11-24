@@ -1,0 +1,15 @@
+**/.venv/
+**/venv/
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+**/__pycache__/
+*.pyc
+.pytest_cache/
+backend/training/pest_dataset/
+backend/models/pest_training/
+
+backend/training/data/
+backend/training/yolov8n.pt
