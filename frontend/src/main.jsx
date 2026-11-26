@@ -397,6 +397,83 @@ function App() {
             </div>
           </form>
         </section>
+      
+        {/* SEO CONTENT FOR FARMING SEARCHES */}
+        <section className="section seo-content" id="farming-guide">
+          <div className="section-head">
+            <div>
+              <div className="eyebrow">SMART FARMING KNOWLEDGE</div>
+              <h2>AI Crop Disease Detection and Smart Farming Assistance</h2>
+              <p>
+                PestEye AI helps farmers understand crop health, identify
+                possible pest and disease problems, and access practical
+                farming guidance using artificial intelligence.
+              </p>
+            </div>
+          </div>
+
+          <div className="about-grid">
+            <article className="about-card">
+              <h3>AI Crop Disease Detection</h3>
+              <p>
+                Upload a clear image of an affected plant or leaf to receive
+                AI-powered crop health screening. Early identification of
+                possible symptoms can help farmers decide when to seek
+                further agricultural advice.
+              </p>
+              <a href="#scanner">Try crop disease screening →</a>
+            </article>
+
+            <article className="about-card">
+              <h3>Plant Pest Identification</h3>
+              <p>
+                PestEye AI can screen crop images for supported pest
+                categories. Recognizing visible pest damage can help farmers
+                investigate crop problems and take informed action.
+              </p>
+              <a href="#scanner">Explore pest detection →</a>
+            </article>
+
+            <article className="about-card">
+              <h3>AI Farming Assistant</h3>
+              <p>
+                Get crop-specific cultivation guidance based on crop type,
+                soil type and growth stage. Ask questions about irrigation,
+                crop care and farming practices.
+              </p>
+              <a href="#assistant">Ask the farming assistant →</a>
+            </article>
+
+            <article className="about-card">
+              <h3>Weather-Based Farming Support</h3>
+              <p>
+                Access local weather conditions and forecast information
+                to better understand environmental conditions affecting
+                your farm.
+              </p>
+              <a href="#weather">Check local weather →</a>
+            </article>
+          </div>
+
+          <div className="section-head">
+            <div>
+              <h2>Why Use PestEye AI?</h2>
+              <p>
+                PestEye AI brings crop image screening, weather information
+                and multilingual farming assistance together in one place.
+                It is designed to make useful farming information easier
+                to access.
+              </p>
+            </div>
+          </div>
+
+          <p className="hint">
+            Important: AI predictions are screening support, not confirmed
+            agricultural diagnoses. Consult an agricultural expert before
+            making treatment decisions or applying pesticides.
+          </p>
+        </section>
+
       </main>
 
       <footer>
