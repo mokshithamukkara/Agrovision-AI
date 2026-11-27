@@ -1,29 +1,115 @@
+
 from pathlib import Path
 import os
+import gc
+
 import numpy as np
+import torch
 from PIL import Image
 
 from .advisor import _translate_payload
 
 BASE = Path(__file__).resolve().parents[1]
 
-PEST_PATH = BASE / os.getenv(
-    "PEST_MODEL_PATH",
-    "models/pest_best.pt"
+DISEASE_PATH = BASE / os.getenv(
+    "DISEASE_MODEL_PATH", "models/disease_model.pth"
 )
 
-# Disease detection temporarily disabled.
-# Load the pest model only once and reuse it.
+PEST_PATH = BASE / os.getenv(
+    "PEST_MODEL_PATH", "models/pest_best.pt"
+)
+
+# Use CPU to avoid GPU memory requirements.
+DEVICE = torch.device("cpu")
+
+# Limit CPU threads to reduce resource usage.
+torch.set_num_threads(1)
+
+_disease_model = None
+_disease_classes = None
 _pest_model = None
 
 
+def load_disease_model():
+    global _disease_model, _disease_classes
+
+    if _disease_model is not None:
+        return
+
+    if not DISEASE_PATH.exists():
+        raise FileNotFoundError("Disease model file not found.")
+
+    from torchvision import models
+    from torch import nn
+
+    checkpoint = torch.load(
+        DISEASE_PATH,
+        map_location=DEVICE,
+        weights_only=False
+    )
+
+    _disease_classes = checkpoint["classes"]
+
+    model = models.resnet18(weights=None)
+    model.fc = nn.Linear(512, len(_disease_classes))
+
+    model.load_state_dict(checkpoint["state_dict"])
+    model.to(DEVICE)
+    model.eval()
+
+    _disease_model = model
+
+
 def classify_disease(image):
-    return {
-        "status": "temporarily_disabled",
-        "message": "Disease detection is temporarily disabled.",
-        "prediction": None,
-        "confidence": None
-    }
+    try:
+        load_disease_model()
+
+        image = image.convert("RGB").resize((224, 224))
+
+        array = np.asarray(image, dtype=np.float32) / 255.0
+
+        tensor = torch.from_numpy(
+            array.transpose(2, 0, 1).copy()
+        )
+
+        mean = torch.tensor(
+            [0.485, 0.456, 0.406]
+        ).view(3, 1, 1)
+
+        std = torch.tensor(
+            [0.229, 0.224, 0.225]
+        ).view(3, 1, 1)
+
+        tensor = ((tensor - mean) / std).unsqueeze(0)
+
+        with torch.inference_mode():
+            output = _disease_model(tensor)
+            probabilities = torch.softmax(output, dim=1)
+            confidence, index = torch.max(probabilities, dim=1)
+
+        score = float(confidence.item())
+        prediction = _disease_classes[int(index.item())]
+
+        if score < 0.60:
+            return {
+                "status": "uncertain",
+                "prediction": None,
+                "confidence": round(score, 4)
+            }
+
+        return {
+            "status": "prediction",
+            "prediction": prediction,
+            "confidence": round(score, 4)
+        }
+
+    except Exception as exc:
+        return {
+            "status": "error",
+            "prediction": None,
+            "confidence": None,
+            "message": str(exc)
+        }
 
 
 def detect_pests(image):
@@ -33,7 +119,7 @@ def detect_pests(image):
         return {
             "status": "model_not_configured",
             "detections": [],
-            "message": "Pest detector weights are not installed."
+            "message": "Pest model file not found."
         }
 
     try:
@@ -41,10 +127,15 @@ def detect_pests(image):
             from ultralytics import YOLO
             _pest_model = YOLO(str(PEST_PATH))
 
-        result = _pest_model(
-            np.array(image),
-            verbose=False
-        )[0]
+        image = image.convert("RGB").resize((640, 640))
+
+        with torch.inference_mode():
+            result = _pest_model(
+                np.asarray(image),
+                imgsz=416,
+                device="cpu",
+                verbose=False
+            )[0]
 
         detections = []
 

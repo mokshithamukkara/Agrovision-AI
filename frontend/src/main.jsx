@@ -1,5 +1,10 @@
-
 import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import CropDisease from './pages/CropDisease';
+import PestIdentification from './pages/PestIdentification';
+import TomatoGuide from './pages/TomatoGuide';
+import RiceGuide from './pages/RiceGuide';
 import { createRoot } from 'react-dom/client';
 import {
   Sprout, Upload, MapPin, CloudSun, ScanSearch,
@@ -485,4 +490,14 @@ function App() {
   );
 }
 
-createRoot(document.getElementById('root')).render(<App />);
+createRoot(document.getElementById('root')).render(
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<App />} />
+      <Route path="/crop-disease-detection" element={<CropDisease />} />
+      <Route path="/plant-pest-identification" element={<PestIdentification />} />
+      <Route path="/tomato-disease-guide" element={<TomatoGuide />} />
+      <Route path="/rice-disease-guide" element={<RiceGuide />} />
+    </Routes>
+  </BrowserRouter>
+);
