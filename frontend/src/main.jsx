@@ -403,6 +403,46 @@ function App() {
           </form>
         </section>
       
+        
+<section className="section" id="crop-guides">
+  <div className="section-head">
+    <div>
+      <div className="eyebrow">CROP HEALTH KNOWLEDGE</div>
+      <h2>Explore Our Crop Disease and Pest Guides</h2>
+      <p>
+        Learn about common crop diseases, visible symptoms,
+        pest identification and practical prevention methods.
+      </p>
+    </div>
+  </div>
+
+  <div className="features-grid">
+    <a href="/crop-disease-detection" className="feature-card">
+      <h3>Crop Disease Detection</h3>
+      <p>Understand common plant diseases and their symptoms.</p>
+      <span className="feature-link">Explore guide →</span>
+    </a>
+
+    <a href="/plant-pest-identification" className="feature-card">
+      <h3>Plant Pest Identification</h3>
+      <p>Learn about common crop pests and their effects.</p>
+      <span className="feature-link">Explore guide →</span>
+    </a>
+
+    <a href="/tomato-disease-guide" className="feature-card">
+      <h3>Tomato Disease Guide</h3>
+      <p>Discover tomato diseases, symptoms and crop care tips.</p>
+      <span className="feature-link">Explore guide →</span>
+    </a>
+
+    <a href="/rice-disease-guide" className="feature-card">
+      <h3>Rice Disease Guide</h3>
+      <p>Learn about rice diseases and prevention practices.</p>
+      <span className="feature-link">Explore guide →</span>
+    </a>
+  </div>
+</section>
+
         {/* SEO CONTENT FOR FARMING SEARCHES */}
         <section className="section seo-content" id="farming-guide">
           <div className="section-head">
