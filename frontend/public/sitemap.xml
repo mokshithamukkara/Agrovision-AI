@@ -1,5 +1,30 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <url>
-    <loc>https://agrovision-ai.pages.dev/</loc>
+    <loc>https://pesteye-ai.pages.dev/</loc>
+    <priority>1.0</priority>
   </url>
+
+  <url>
+    <loc>https://pesteye-ai.pages.dev/crop-disease-detection</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://pesteye-ai.pages.dev/plant-pest-identification</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://pesteye-ai.pages.dev/tomato-disease-guide</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://pesteye-ai.pages.dev/rice-disease-guide</loc>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>

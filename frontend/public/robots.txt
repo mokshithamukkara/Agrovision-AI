@@ -1,5 +1,4 @@
-
 User-agent: *
 Allow: /
 
-Sitemap: https://agrovision-ai.pages.dev/sitemap.xml
+Sitemap: https://pesteye-ai.pages.dev/sitemap.xml
